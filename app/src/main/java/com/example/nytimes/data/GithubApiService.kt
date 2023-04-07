@@ -12,16 +12,14 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 class GithubApiService {
 
-    val loggingInterceptor = HttpLoggingInterceptor().apply {
+    private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
-    val client = OkHttpClient.Builder()
+    private val client = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
         // Add any other interceptors as needed
         .build()
-
-    val moshi = Moshi.Builder().build()
 
     private val retrofit = Retrofit.Builder()
         .baseUrl("https://api.github.com")

@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -51,10 +50,10 @@ import com.example.nytimes.data.RepositoriesViewModel
 import com.example.nytimes.model.Repository
 import com.example.nytimes.ui.theme.MyApplicationTheme
 import kotlinx.coroutines.launch
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 class MainActivity : ComponentActivity() {
-    val mainViewModel by viewModels<RepositoriesViewModel>()
-
+    private val mainViewModel by viewModels<RepositoriesViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +65,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    UserInput(Modifier, mainViewModel)
+                    UserInput(Modifier)
 
                 }
             }
@@ -104,7 +103,7 @@ fun openCustomTab(context: Context, url: Uri) {
     builder.setInstantAppsEnabled(true)
 
     // on below line we are setting tool bar color for our custom chrome tabs.
-    builder.setToolbarColor(ContextCompat.getColor(context, R.color.purple_200))
+    builder.setToolbarColor(ContextCompat.getColor(context, R.color.purple_200)) // change color
 
     // on below line we are creating a
     // variable to build our builder.
@@ -136,7 +135,8 @@ fun openCustomTab(context: Context, url: Uri) {
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun UserInput(modifier: Modifier, viewModel: RepositoriesViewModel) {
+fun UserInput(modifier: Modifier) {
+    val viewModel: RepositoriesViewModel = viewModel()
     var name by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
     Box(modifier = modifier
