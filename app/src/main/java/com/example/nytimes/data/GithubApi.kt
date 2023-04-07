@@ -1,6 +1,7 @@
 package com.example.nytimes.data
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
@@ -17,8 +18,8 @@ interface GithubApi {
 
     @JsonClass(generateAdapter = true)
     data class Repository(
-        val id : Int,
-        val name: String
+        @Json(name = "id") val id : Int,
+        @Json(name = "name") val name: String
     )
 
 }
