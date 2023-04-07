@@ -12,7 +12,6 @@ object GithubRepository {
     suspend fun getRepositories(orgName: String): List<Repository> {
         val response = api.getRepositoriesFromOrgName(orgName)
         val sortedResponse = response.sortedByDescending { it.stars }
-        // Log.d("sorted response body", sortedResponse.toString())
         return sortedResponse.take(3)
     }
 }
