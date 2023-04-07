@@ -79,6 +79,10 @@ dependencies {
 
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
+    // Browser
+    implementation("androidx.browser:browser:1.2.0")
+
+
 
 
     implementation(libs.core.ktx)

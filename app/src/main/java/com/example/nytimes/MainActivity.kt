@@ -1,5 +1,7 @@
 package com.example.nytimes
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -7,6 +9,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,6 +42,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.nytimes.data.GithubApi
@@ -77,11 +81,57 @@ fun RepositoryList(repositories: List<Repository>) {
         items(repositories) { repo ->
             Text(text = repo.fullName,
             modifier = Modifier.clickable {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(repo.url))
-                context.startActivity(intent)
+                //val intent = Intent(Intent.ACTION_VIEW, Uri.parse(repo.url))
+                //context.startActivity(intent)
+                openCustomTab(context, Uri.parse(repo.url))
             })
         }
     }
+}
+
+fun openCustomTab(context: Context, url: Uri) {
+    val package_name = "com.android.chrome"
+    val activity = (context as? Activity)
+    val builder = CustomTabsIntent.Builder()
+
+    // on below line we are setting show title
+    // to true to display the title for
+    // our chrome tabs.
+    builder.setShowTitle(true)
+
+    // on below line we are enabling instant
+    // app to open if it is available.
+    builder.setInstantAppsEnabled(true)
+
+    // on below line we are setting tool bar color for our custom chrome tabs.
+    builder.setToolbarColor(ContextCompat.getColor(context, R.color.purple_200))
+
+    // on below line we are creating a
+    // variable to build our builder.
+    val customBuilder = builder.build()
+
+    // on below line we are checking if the package name is null or not.
+    if (package_name != null) {
+        // on below line if package name is not null
+        // we are setting package name for our intent.
+        customBuilder.intent.setPackage(package_name)
+
+        // on below line we are calling launch url method
+        // and passing url to it on below line.
+        customBuilder.launchUrl(context, url)
+    } else {
+        // this method will be called if the
+        // chrome is not present in user device.
+        // in this case we are simply passing URL
+        // within intent to open it.
+        val i = Intent(Intent.ACTION_VIEW, url)
+
+        // on below line we are calling start
+        // activity to start the activity.
+        activity?.startActivity(i)
+    }
+
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
@@ -118,11 +168,6 @@ fun UserInput(modifier: Modifier, viewModel: RepositoriesViewModel) {
             RepositoryList(repositories = viewModel.repositories)
         }
     }
-
-    // add a button which sends the name to call api on click callback
-    // add error checking for the name
-
-    Log.d("name is", name)
 }
 
 @Composable
