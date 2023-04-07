@@ -12,12 +12,7 @@ object GithubRepository {
     suspend fun getRepositories(orgName: String): List<Repository> {
         val response = api.getRepositoriesFromOrgName(orgName)
         val sortedResponse = response.sortedByDescending { it.stars }
-//        if (sortedResponse.size <=3) {
-//            return sortedResponse
-//        } else {
-//
-//        }
         // Log.d("sorted response body", sortedResponse.toString())
-        return sortedResponse
+        return sortedResponse.take(3)
     }
 }
