@@ -1,6 +1,7 @@
 package com.example.nytimes.data
 
 import android.util.Log
+import com.example.nytimes.model.Repository
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -8,12 +9,10 @@ import retrofit2.http.Path
 object GithubRepository {
     private val api = GithubApiService().api
 
-    suspend fun getRepositories(username: String): List<GithubApi.Repository> {
-        Log.d("in here", "in here")
-        Log.d("response", api.getRepositoriesFromUsername("iamrita").toString())
-        val response = api.getRepositoriesFromUsername("iamrita")
-        Log.d("response body", response.toString())
-
-        return response
+    suspend fun getRepositories(username: String): List<Repository> {
+        val response = api.getRepositoriesFromOrgName(username)
+        val sortedResponse = response.sortedByDescending { it.stars }
+        // Log.d("sorted response body", sortedResponse.toString())
+        return sortedResponse
     }
 }

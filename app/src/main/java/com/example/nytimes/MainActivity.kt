@@ -37,37 +37,35 @@ import androidx.lifecycle.lifecycleScope
 import com.example.nytimes.data.GithubApi
 import com.example.nytimes.data.GithubRepository
 import com.example.nytimes.data.RepositoriesViewModel
+import com.example.nytimes.model.Repository
 import com.example.nytimes.ui.theme.MyApplicationTheme
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
-    private val viewModel by viewModels<RepositoriesViewModel>()
+    val mainViewModel by viewModels<RepositoriesViewModel>()
 
-    @OptIn(ExperimentalMaterial3Api::class)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lifecycleScope.launch {
-            GithubRepository.getRepositories("")
-        }
+
         setContent {
             //val repositories = viewModel.repositories.observeAsState(emptyList())
+            var repos by remember { mutableStateOf<List<Repository>>(emptyList()) }
+
+//            LaunchedEffect(Unit) {
+//                repos = GithubRepository.getRepositories("slackhq")
+//                Log.d("final repos are" , repos.toString())
+//            }
+
             MyApplicationTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Text(text = "hello")
-//                    val repositories = viewModel.repositories.observeAsState()
-//                    viewModel.getRepositories("iamrita")
-//                    Column {
-////                        TextField(
-////                            value = "",
-////                            onValueChange = { username -> viewModel.getRepositories(username) },
-////                            label = { Text("GitHub Username") }
-////                        )
-//                        RepositoryList(repositories.value!!.repositories)
-//                    }
+                    mainViewModel.getRepositories()
+                    RepositoryList(repositories = mainViewModel.repositories)
+
 
                 }
             }
@@ -76,10 +74,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun RepositoryList(repositories: List<GithubApi.Repository>) {
+fun RepositoryList(repositories: List<Repository>) {
     LazyColumn {
         items(repositories) { repo ->
-            Text(text = repo.name)
+            Text(text = repo.fullName)
         }
     }
 }

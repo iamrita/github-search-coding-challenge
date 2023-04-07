@@ -1,6 +1,7 @@
 package com.example.nytimes.data
 
 import android.os.Parcelable
+import com.example.nytimes.model.Repository
 import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -11,14 +12,9 @@ import retrofit2.http.Path
 
 interface GithubApi {
 
-    @GET("/users/{username}/repos")
-    suspend fun getRepositoriesFromUsername(@Path("username") username: String) : List<Repository>
+    @GET("/users/{org}/repos")
+    suspend fun getRepositoriesFromOrgName(@Path("org") orgName: String) : List<Repository>
 
-    data class RepositoryList (@SerializedName("") val repositories: List<Repository>)
 
-    data class Repository(
-        @SerializedName("id") val id : Int,
-        @SerializedName("name") val name: String
-    )
 
 }
