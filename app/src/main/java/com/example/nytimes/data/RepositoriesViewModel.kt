@@ -16,14 +16,13 @@ class RepositoriesViewModel : ViewModel() {
 
     fun getRepositories(orgName: String) {
         viewModelScope.launch {
-//            try {
-//                val repoList = api.getRepositoriesFromOrgName("slackhq")
-//                repositories = repoList
-//            } catch (e: Exception) {
-//                Log.d("error is", e.message.toString())
-//            }
-            val repoList = GithubRepository.getRepositories(orgName)
-            repositories = repoList
+            try {
+                val repoList = GithubRepository.getRepositories(orgName)
+                repositories = repoList
+            } catch (e: Exception) {
+                Log.d("error is", e.message.toString())
+            }
+
         }
     }
 }
