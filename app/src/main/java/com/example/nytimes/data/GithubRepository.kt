@@ -8,12 +8,12 @@ import retrofit2.http.Path
 object GithubRepository {
     private val api = GithubApiService().api
 
-    suspend fun getRepositories(username: String): GithubApi.RepositoryList? {
+    suspend fun getRepositories(username: String): List<GithubApi.Repository> {
         Log.d("in here", "in here")
         Log.d("response", api.getRepositoriesFromUsername("iamrita").toString())
         val response = api.getRepositoriesFromUsername("iamrita")
-        Log.d("response body", response.body().toString())
+        Log.d("response body", response.toString())
 
-        return response.body()
+        return response
     }
 }

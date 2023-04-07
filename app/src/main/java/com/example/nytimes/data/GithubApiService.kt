@@ -1,5 +1,6 @@
 package com.example.nytimes.data
 
+import android.net.Uri
 import com.google.gson.GsonBuilder
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
@@ -21,13 +22,10 @@ class GithubApiService {
         .build()
 
     val moshi = Moshi.Builder().build()
-    val gson = GsonBuilder()
-    val gsonConverterFactory = GsonConverterFactory.create(gson.create())
 
     private val retrofit = Retrofit.Builder()
         .baseUrl("https://api.github.com")
-        .client(client)
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addConverterFactory(GsonConverterFactory.create())
         .build()
 
     val api = retrofit.create(GithubApi::class.java)

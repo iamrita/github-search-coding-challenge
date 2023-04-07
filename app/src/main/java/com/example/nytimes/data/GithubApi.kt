@@ -10,16 +10,15 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface GithubApi {
+
     @GET("/users/{username}/repos")
-    suspend fun getRepositoriesFromUsername(@Path("username") username: String) : Response<RepositoryList>
+    suspend fun getRepositoriesFromUsername(@Path("username") username: String) : List<Repository>
 
-    @JsonClass(generateAdapter = true)
-    data class RepositoryList (val repositories: List<Repository>)
+    data class RepositoryList (@SerializedName("") val repositories: List<Repository>)
 
-    @JsonClass(generateAdapter = true)
     data class Repository(
-        @Json(name = "id") val id : Int,
-        @Json(name = "name") val name: String
+        @SerializedName("id") val id : Int,
+        @SerializedName("name") val name: String
     )
 
 }
