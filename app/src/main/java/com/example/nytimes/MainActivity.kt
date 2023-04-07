@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -49,23 +50,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            //val repositories = viewModel.repositories.observeAsState(emptyList())
-            var repos by remember { mutableStateOf<List<Repository>>(emptyList()) }
-
-//            LaunchedEffect(Unit) {
-//                repos = GithubRepository.getRepositories("slackhq")
-//                Log.d("final repos are" , repos.toString())
-//            }
-
             MyApplicationTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    mainViewModel.getRepositories()
-                    RepositoryList(repositories = mainViewModel.repositories)
-
+                    UserInput(Modifier, mainViewModel)
 
                 }
             }
@@ -84,7 +75,7 @@ fun RepositoryList(repositories: List<Repository>) {
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun UserInput(modifier: Modifier) {
+fun UserInput(modifier: Modifier, viewModel: RepositoriesViewModel) {
     var name by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
     Box(modifier = modifier
@@ -110,6 +101,10 @@ fun UserInput(modifier: Modifier) {
                     modifier = modifier.fillMaxWidth()
                 )
             }
+            Button(onClick = { viewModel.getRepositories(name) }) {
+                Text(text = "Go")
+            }
+            RepositoryList(repositories = viewModel.repositories)
         }
     }
 

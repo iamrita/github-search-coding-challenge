@@ -12,10 +12,9 @@ import com.example.nytimes.model.Repository
 import kotlinx.coroutines.launch
 
 class RepositoriesViewModel : ViewModel() {
-    private val api = GithubApiService().api
     var repositories: List<Repository> by mutableStateOf(listOf())
 
-    fun getRepositories() {
+    fun getRepositories(orgName: String) {
         viewModelScope.launch {
 //            try {
 //                val repoList = api.getRepositoriesFromOrgName("slackhq")
@@ -23,7 +22,7 @@ class RepositoriesViewModel : ViewModel() {
 //            } catch (e: Exception) {
 //                Log.d("error is", e.message.toString())
 //            }
-            val repoList = GithubRepository.getRepositories("slackhq")
+            val repoList = GithubRepository.getRepositories(orgName)
             repositories = repoList
         }
     }

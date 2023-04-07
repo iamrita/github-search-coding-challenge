@@ -9,9 +9,14 @@ import retrofit2.http.Path
 object GithubRepository {
     private val api = GithubApiService().api
 
-    suspend fun getRepositories(username: String): List<Repository> {
-        val response = api.getRepositoriesFromOrgName(username)
+    suspend fun getRepositories(orgName: String): List<Repository> {
+        val response = api.getRepositoriesFromOrgName(orgName)
         val sortedResponse = response.sortedByDescending { it.stars }
+//        if (sortedResponse.size <=3) {
+//            return sortedResponse
+//        } else {
+//
+//        }
         // Log.d("sorted response body", sortedResponse.toString())
         return sortedResponse
     }
