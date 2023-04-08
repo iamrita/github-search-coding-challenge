@@ -46,7 +46,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             MyApplicationTheme {
                 // A surface container using the 'background' color from the theme
@@ -55,7 +54,6 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     HomeView(Modifier)
-
                 }
             }
         }
@@ -68,13 +66,38 @@ fun RepositoryList(repositories: List<Repository>) {
     LazyColumn {
         items(repositories) { repo ->
             Text(text = repo.fullName,
-            modifier = Modifier.clickable {
-                //val intent = Intent(Intent.ACTION_VIEW, Uri.parse(repo.url))
-                //context.startActivity(intent)
-                openCustomTab(context, Uri.parse(repo.url))
-            })
+                modifier = Modifier.clickable {
+                    openCustomTab(context, Uri.parse(repo.url))
+                })
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeView(modifier: Modifier, viewModel: RepositoriesViewModel = viewModel()) {
+    var name by remember { mutableStateOf("") }
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(top = 20.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(modifier = modifier.width(240.dp)) {
+            TextField(
+                value = name,
+                onValueChange = { name = it },
+                label = { Text("Enter your desired username:") },
+                modifier = modifier.fillMaxWidth()
+            )
+        }
+        Button(onClick = { viewModel.getRepositories(name) }) {
+            Text(text = "Go")
+        }
+        RepositoryList(repositories = viewModel.repositories)
+    }
+
 }
 
 private fun openCustomTab(context: Context, url: Uri) {
@@ -120,41 +143,4 @@ private fun openCustomTab(context: Context, url: Uri) {
     }
 
 
-}
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
-@Composable
-fun HomeView(modifier: Modifier) {
-    val viewModel: RepositoriesViewModel = viewModel()
-    var name by remember { mutableStateOf("") }
-    val keyboardController = LocalSoftwareKeyboardController.current
-    Box(modifier = modifier
-        .fillMaxWidth()
-        .clickable(onClick = {
-            // Dismiss the keyboard when the user clicks outside of the TextField
-            keyboardController?.hide()
-            // maybe remove ripple effect?
-        })
-    ) {
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(top = 20.dp),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Box(modifier = modifier.width(240.dp)) {
-                TextField(
-                    value = name,
-                    onValueChange = { name = it },
-                    label = { Text("Enter your desired username:") },
-                    modifier = modifier.fillMaxWidth()
-                )
-            }
-            Button(onClick = { viewModel.getRepositories(name) }) {
-                Text(text = "Go")
-            }
-            RepositoryList(repositories = viewModel.repositories)
-        }
-    }
 }
