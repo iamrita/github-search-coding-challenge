@@ -23,3 +23,4 @@ back to me. Please include instructions to build and test.
 - Make list Scrollable
 - Better Styling on home screen
 - change tab color for chrome custom tab 
+- add tests 

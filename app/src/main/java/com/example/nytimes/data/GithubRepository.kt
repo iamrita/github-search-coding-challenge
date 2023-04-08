@@ -6,9 +6,8 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-object GithubRepository {
+class GithubRepository {
     private val api = GithubApiService().api
-
     suspend fun getRepositories(orgName: String): List<Repository> {
         val response = api.getRepositoriesFromOrgName(orgName)
         val sortedResponse = response.sortedByDescending { it.stars }
