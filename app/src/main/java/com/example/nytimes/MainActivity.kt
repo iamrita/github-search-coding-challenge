@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    UserInput(Modifier)
+                    HomeView(Modifier)
 
                 }
             }
@@ -124,7 +124,7 @@ private fun openCustomTab(context: Context, url: Uri) {
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun UserInput(modifier: Modifier) {
+fun HomeView(modifier: Modifier) {
     val viewModel: RepositoriesViewModel = viewModel()
     var name by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current

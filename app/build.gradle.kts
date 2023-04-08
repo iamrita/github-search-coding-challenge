@@ -57,8 +57,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07")
 
-
-
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
@@ -84,6 +82,12 @@ dependencies {
     // Browser
     implementation("androidx.browser:browser:1.2.0")
 
+    // Hilt/Dagger
+    implementation("com.google.dagger:hilt-android:2.37")
+    kapt("com.google.dagger:hilt-android-compiler:2.37")
+
+    // Hilt View Model
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
 
 
 
