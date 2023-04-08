@@ -20,7 +20,6 @@ Once you've completed the test, just zip up your solution and email or share it 
 back to me. Please include instructions to build and test.
 
 # TODO:
-- Make list Scrollable
 - Better Styling on home screen
 - change tab color for chrome custom tab 
 - add tests 

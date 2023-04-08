@@ -35,6 +35,8 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -89,8 +91,9 @@ fun HomeView(modifier: Modifier, viewModel: RepositoriesViewModel = viewModel())
                 value = name,
                 onValueChange = { name = it },
                 label = { Text("Enter your desired username:") },
-                modifier = modifier.fillMaxWidth()
-            )
+                modifier = modifier.fillMaxWidth().semantics { contentDescription = "textfield" },
+
+                )
         }
         Button(onClick = { viewModel.getRepositories(name) }) {
             Text(text = "Go")
