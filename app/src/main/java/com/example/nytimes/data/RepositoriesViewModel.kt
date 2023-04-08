@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import com.example.nytimes.model.Repository
 import kotlinx.coroutines.launch
 
-// should i take in the repo here, or use static 
+// should i take in the repo here, or use static
 class RepositoriesViewModel : ViewModel() {
     var repositories: List<Repository> by mutableStateOf(listOf())
     fun getRepositories(orgName: String) {
