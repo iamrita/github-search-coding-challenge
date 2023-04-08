@@ -104,45 +104,34 @@ fun HomeView(modifier: Modifier, viewModel: RepositoriesViewModel = viewModel())
 }
 
 private fun openCustomTab(context: Context, url: Uri) {
-    val package_name = "com.android.chrome"
+    val packageName = "com.android.chrome"
     val activity = (context as? Activity)
     val builder = CustomTabsIntent.Builder()
 
-    // on below line we are setting show title
+    // setting show title
     // to true to display the title for
     // our chrome tabs.
     builder.setShowTitle(true)
 
-    // on below line we are enabling instant
+    // enabling instant
     // app to open if it is available.
     builder.setInstantAppsEnabled(true)
 
-    // on below line we are setting tool bar color for our custom chrome tabs.
+    // setting tool bar color for our custom chrome tabs.
     builder.setToolbarColor(ContextCompat.getColor(context, R.color.purple_200)) // change color
 
     // on below line we are creating a
     // variable to build our builder.
     val customBuilder = builder.build()
 
-    // on below line we are checking if the package name is null or not.
-    if (package_name != null) {
-        // on below line if package name is not null
-        // we are setting package name for our intent.
-        customBuilder.intent.setPackage(package_name)
-
-        // on below line we are calling launch url method
-        // and passing url to it on below line.
+    if (packageName != null) {
+        customBuilder.intent.setPackage(packageName)
         customBuilder.launchUrl(context, url)
     } else {
-        // this method will be called if the
-        // chrome is not present in user device.
-        // in this case we are simply passing URL
-        // within intent to open it.
-        val i = Intent(Intent.ACTION_VIEW, url)
-
-        // on below line we are calling start
-        // activity to start the activity.
-        activity?.startActivity(i)
+        // if chrome is not installed in user device
+        // start activity normally
+        val intent = Intent(Intent.ACTION_VIEW, url)
+        activity?.startActivity(intent)
     }
 
 

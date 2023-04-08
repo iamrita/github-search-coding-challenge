@@ -31,9 +31,8 @@ class ExampleInstrumentedTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-
     @Test
-    fun myTest() {
+    fun test_user_entered_organization_returns_results() {
         // Start the app
         lateinit var textFieldContentDescription: String
         composeTestRule.setContent {
@@ -43,7 +42,6 @@ class ExampleInstrumentedTest {
                HomeView(Modifier)
             }
         }
-
         composeTestRule.onNodeWithContentDescription(textFieldContentDescription).performTextInput("slackhq")
         composeTestRule.onNodeWithText("Go").performClick()
         composeTestRule.waitUntil {
