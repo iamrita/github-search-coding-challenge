@@ -1,4 +1,12 @@
-# NYTimes Code Challenge
+# Amrita's NYTimes Coding Challenge
+
+I built this app using Retrofit, Jetpack Compose, and Coroutines. You can run it using
+Android Studio. 
+
+Here is a sample gif below: 
+![](https://github.com/amrita/nytimes-coding-challenge/blob/main/sample_video.gif)
+
+# Coding Challenge Instructions
 
 For the next phase of your interview process, we would like to see some of your Android coding
 skills… Some technologies that we use at the NYTimes are Kotlin Coroutines, Dagger/Hilt and Jetpack
@@ -18,8 +26,3 @@ You can find details on the API here: https://developer.github.com/v3/
 
 Once you've completed the test, just zip up your solution and email or share it (via Google Drive)
 back to me. Please include instructions to build and test.
-
-# TODO:
-- Better Styling on home screen
-- change tab color for chrome custom tab 
-- add tests 
