@@ -55,19 +55,15 @@ fun RepositoryList(modifier: Modifier, repositories: List<Repository>) {
 }
 
 /**
- * Opens Custom Chrome tab if user clicks on one of hte listed repositories.
+ * Opens Custom Chrome tab if user clicks on one of the listed repositories.
  */
 private fun openCustomTab(context: Context, url: Uri) {
     val packageName = "com.android.chrome"
-    val builder = CustomTabsIntent.Builder()
-    builder.setShowTitle(true)
-
-    // enabling Instant Apps to open if available
-    builder.setInstantAppsEnabled(true)
-
-    builder.setToolbarColor(ContextCompat.getColor(context, R.color.purple_40)) // change color
-
-    val customBuilder = builder.build()
+    val customBuilder = CustomTabsIntent.Builder()
+        .setShowTitle(true)
+        .setInstantAppsEnabled(true) // enabling Instant Apps to open if available
+        .setToolbarColor(ContextCompat.getColor(context, R.color.purple_40))
+        .build()
 
     // if chrome is installed, launch custom tab
     customBuilder.intent.setPackage(packageName)
