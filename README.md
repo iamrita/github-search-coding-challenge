@@ -4,7 +4,7 @@ I built this app using Retrofit, Jetpack Compose, and Coroutines. You can run it
 Android Studio. 
 
 Here is a sample gif below: 
-![](https://github.com/amrita/nytimes-coding-challenge/blob/main/sample_video.gif)
+![](https://github.com/iamrita/nytimes-coding-challenge/blob/main/sample_video.gif)
 
 # Coding Challenge Instructions
 
