@@ -5,6 +5,10 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * GithubApiService creates an instance of a retrofit object, customizing it to use OkHttp and
+ * a Gson converter,to implement the endpoint given by the [GithubApi] interface.
+ */
 class GithubApiService {
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {

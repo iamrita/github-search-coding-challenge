@@ -9,6 +9,10 @@ import androidx.lifecycle.ViewModel
 import com.example.nytimes.model.Repository
 import kotlinx.coroutines.launch
 
+/**
+ * RepositoriesViewModel is a view model that represents the result of the data fetching. It
+ * is used by the UI in [MainActivity] to display the results of the API call.
+ */
 class RepositoriesViewModel: ViewModel() {
     var repositories: List<Repository> by mutableStateOf(listOf())
     fun getRepositories(orgName: String) {
