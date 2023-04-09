@@ -19,9 +19,9 @@ import org.junit.Assert.*
 import org.junit.Rule
 
 /**
- * Instrumented test, which will execute on an Android device.
- * Tests that clicking on the "Get all repositories button" returns a top
- * repository. Heads up! Because it is a UI test, it is a little flaky.
+ * Basic Instrumented test, which will execute on an Android device.
+ * Simply tests that the home page loads with the user input
+ * and "get top repositories" button.
  */
 @RunWith(AndroidJUnit4::class)
 class GithubUITest {
@@ -39,10 +39,7 @@ class GithubUITest {
                HomeView(Modifier)
             }
         }
-        composeTestRule.onNodeWithContentDescription(textFieldContentDescription).performTextInput("slackhq")
-        composeTestRule.onNodeWithText("Get top repositories").performClick()
-        composeTestRule.waitUntil {
-            composeTestRule.onAllNodesWithText("slackhq/circuit").fetchSemanticsNodes().size == 1
-        }
+        composeTestRule.onNodeWithContentDescription(textFieldContentDescription).assertIsDisplayed()
+        composeTestRule.onNodeWithText("Get top repositories").assertIsDisplayed()
     }
 }

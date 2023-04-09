@@ -1,7 +1,7 @@
 # Amrita's NYTimes Coding Challenge
 
-I built this app using Retrofit, Jetpack Compose, and Coroutines. You can run it using
-Android Studio. 
+I built this app using Retrofit, Jetpack Compose, and Coroutines. You can run the app using
+Android Studio, and there is a very basic UI test that you can run separately. 
 
 Here is a sample gif below:
 
