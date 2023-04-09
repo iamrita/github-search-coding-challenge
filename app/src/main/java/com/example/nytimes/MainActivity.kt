@@ -22,9 +22,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +40,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -44,8 +49,14 @@ import com.example.nytimes.data.RepositoriesViewModel
 import com.example.nytimes.model.Repository
 import com.example.nytimes.ui.theme.MyApplicationTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.nytimes.ui.theme.Purple40
+import androidx.compose.material.*
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.TextButton
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -55,22 +66,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HomeView(Modifier)
+                  HomeView(modifier = Modifier)
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun RepositoryList(repositories: List<Repository>) {
-    val context = LocalContext.current
-    LazyColumn {
-        items(repositories) { repo ->
-            Text(text = repo.fullName,
-                modifier = Modifier.clickable {
-                    openCustomTab(context, Uri.parse(repo.url))
-                })
         }
     }
 }
@@ -78,7 +76,8 @@ fun RepositoryList(repositories: List<Repository>) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeView(modifier: Modifier, viewModel: RepositoriesViewModel = viewModel()) {
-    var name by remember { mutableStateOf("") }
+    var orgName by remember { mutableStateOf("") }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -88,19 +87,47 @@ fun HomeView(modifier: Modifier, viewModel: RepositoriesViewModel = viewModel())
     ) {
         Box(modifier = modifier.width(240.dp)) {
             TextField(
-                value = name,
-                onValueChange = { name = it },
-                label = { Text("Enter your desired username:") },
-                modifier = modifier.fillMaxWidth().semantics { contentDescription = "textfield" },
+                value = orgName,
+                onValueChange = { orgName = it },
+                label = { Text("Organization name:") },
+                modifier = modifier
+                    .fillMaxWidth()
+                    .semantics { contentDescription = "user_input" },
 
                 )
         }
-        Button(onClick = { viewModel.getRepositories(name) }) {
-            Text(text = "Go")
+        Button(
+            modifier = modifier
+                .width(240.dp)
+                .padding(10.dp),
+            onClick = {
+                viewModel.getRepositories(orgName)
+            }) {
+            Text(text = "Get top repositories")
         }
         RepositoryList(repositories = viewModel.repositories)
     }
 
+}
+
+@Composable
+fun RepositoryList(repositories: List<Repository>) {
+    val context = LocalContext.current
+    var index = 1
+    LazyColumn {
+        items(repositories) { repo ->
+            Text(
+                text = "${index}. ${repo.fullName}",
+                modifier = Modifier
+                    .padding(10.dp)
+                    .clickable {
+                        openCustomTab(context, Uri.parse(repo.url))
+                    },
+                fontWeight = FontWeight.Bold
+            )
+            index++
+        }
+    }
 }
 
 private fun openCustomTab(context: Context, url: Uri) {
@@ -118,7 +145,7 @@ private fun openCustomTab(context: Context, url: Uri) {
     builder.setInstantAppsEnabled(true)
 
     // setting tool bar color for our custom chrome tabs.
-    builder.setToolbarColor(ContextCompat.getColor(context, R.color.purple_200)) // change color
+    builder.setToolbarColor(ContextCompat.getColor(context, R.color.purple_40)) // change color
 
     // on below line we are creating a
     // variable to build our builder.
@@ -133,6 +160,4 @@ private fun openCustomTab(context: Context, url: Uri) {
         val intent = Intent(Intent.ACTION_VIEW, url)
         activity?.startActivity(intent)
     }
-
-
 }
