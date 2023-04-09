@@ -1,4 +1,4 @@
-# Amrita's NYTimes Coding Challenge
+# Amrita's Coding Challenge
 
 I built this app using Retrofit, Jetpack Compose, and Coroutines. You can run the app using
 Android Studio, and there is a very basic UI test that you can run separately. 
@@ -10,7 +10,7 @@ Here is a sample gif below:
 ## Coding Challenge Instructions
 
 For the next phase of your interview process, we would like to see some of your Android coding
-skills… Some technologies that we use at the NYTimes are Kotlin Coroutines, Dagger/Hilt and Jetpack
+skills… Some technologies that we use are Kotlin Coroutines, Dagger/Hilt and Jetpack
 Compose. While the use of these tools would be preferable, please use whatever you are most
 comfortable with or excited about. It’s most important to us to see your overall style and approach
 to building and testing an application. At your interview, we will also discuss some of the
