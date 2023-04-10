@@ -7,9 +7,9 @@ import com.google.gson.annotations.SerializedName
  * information about the repository that is relevant for this app's purpose.
  *
  * id: unique id of repository
- * full_name: full name of the repository, including what organization it is in
- * stargazers_count: how many people have starred this repository
- * html_url: link to repository
+ * fullName: full name of the repository, including what organization it is in
+ * stars: how many people have starred this repository
+ * url: link to repository
  */
 data class Repository(
     @SerializedName("id") val id : Int,
